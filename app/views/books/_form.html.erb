@@ -39,9 +39,18 @@
   <div class="field">
     <%= f.label :dl %>
     <%= f.check_box :dl %>
+    </div>
+    
+  <div class="field">
+    <%= f.label :isbn, 'ISBNコード' %>
+    <%= f.text_field :isbn %>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit '保存',data:{confirm: '保存しても良いですか？',
+    disable_with: '処理中...'} %>
   </div>
+  
+  
+
 <% end %>
