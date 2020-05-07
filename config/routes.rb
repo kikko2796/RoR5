@@ -68,4 +68,7 @@ Rails.application.routes.draw do
   get 'view/partial_col'
   get 'view/partial_spacer'
   get 'login/index'
+  get 'record/find'
+  get 'record/find_by'
+  get 'record/find_by2'
 end
