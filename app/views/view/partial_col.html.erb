@@ -1,0 +1,7 @@
+<div id="list">
+    <%= render partial: 'books/book', collection: @books,
+    locals: { type: :details } %>
+    </div>
+    <div id="list">
+       <%= render @books, type: :details %>
+       </div> 

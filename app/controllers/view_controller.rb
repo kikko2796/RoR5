@@ -45,4 +45,23 @@ class ViewController < ApplicationController
     def conc
     @books = Book.all
     end
+    def multi
+        render layout: 'layout'
+    end
+    def nest
+        @msg= '今日も良い天気です。'
+        render layout: 'child'
+    end
+    def partial_basic
+        @book = Book.find(1)
+    end
+    def partial_param
+        @book = Book.find(1)
+    end
+    def partial_col
+        @books = Book.all
+    end
+    def partial_spacer
+        @books = Book.all
+    end
 end
