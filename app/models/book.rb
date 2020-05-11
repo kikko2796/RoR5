@@ -14,12 +14,18 @@ class Book < ApplicationRecord
   has_many :users, through: :reviews
   has_many :memos, as: :memoable
 
-=begin
-  validates :isbn,
+validates :isbn,
     presence: true,
     uniqueness: true,
     length: { is: 17 },
     format: { with: /\A[0-9]{3}-[0-9]{1}-[0-9]{3,5}-[0-9]{4}-[0-9X]{1}\z/ }
+  
+  validates :isbn,
+    presence: true,
+    uniqueness: {allow_blank: true },
+    length: { is: 17, allow_blank: true },
+    format: { with: /\A[0-9]{3}-[0-9]{1}-[0-9]{3,5}-[0-9]{4}-[0-9X]{1}\z/,allow_blank:true }
+    
   validates :title,
     presence: true,
     length: { minimum: 1, maximum: 100 }
@@ -27,9 +33,9 @@ class Book < ApplicationRecord
     numericality: { only_integer: true, less_than: 10000 }
   validates :publish,
     inclusion:{ in: ['技術評論社', '翔泳社', '秀和システム', '日経BP社', 'ソシム'] }
-=end
 
-=begin
+
+
   #uniqueness 検証 - 一意性検証
   validates :title, uniqueness: { scope: :publish },
   presence: true,
@@ -38,7 +44,7 @@ class Book < ApplicationRecord
     numericality: { only_integer: true, less_than: 10000 }
     validates :publish,
     inclusion:{ in: ['技術評論社', '翔泳社', '秀和システム', '日経BP社', 'ソシム'] }
-=end
+
 
 =begin
   #空白時に検証をスキップする
@@ -49,7 +55,7 @@ class Book < ApplicationRecord
     format: { with: /¥A[0-9]{3}-[0-9]{1}-[0-9]{3,5}-[0-9]{4}-[0-9X]{1}¥z/, allow_blank: true }
 =end
 
-=begin
+
   #エラーメッセージを日本語化
   validates :isbn,
     presence: { message: 'は必須です'},
@@ -59,8 +65,6 @@ class Book < ApplicationRecord
       message: '%{value}は%{count}桁でなければなりません' },
     format: { with: /\A[0-9]{3}-[0-9]{1}-[0-9]{3,5}-[0-9]{4}-[0-9X]{1}\z/,
       allow_blank: true, message: '%{value}は正しい形式ではありません'}
-=end
-
 
 =begin
   #IsbnValidatorクラスによる検証
@@ -72,6 +76,7 @@ class Book < ApplicationRecord
 =end
 
 
+
 =begin
   #IsbnValidatorクラスによる検証（allow_oldパラメーター）
   validates :isbn,
@@ -81,22 +86,22 @@ class Book < ApplicationRecord
 =end
 
   # プライベートメソッドによる検証
-  # validate :isbn_valid?
+  validate :isbn_valid?
 
   #コールバックメソッド
-  #after_destroy :history_book
+  after_destroy :history_book
 
   # 条件付きでコールバックを適用
   # after_destroy :history_book,
   #   unless: Proc.new { |b| b.publish == "unknown" }
 
   # コールバックメソッドをブロック形式で定義
-  # after_destroy do |b|
-  #   logger.info('deleted: ' + b.inspect)
-  # end
+  after_destroy do |b|
+     logger.info('deleted: ' + b.inspect)
+   end
 
   # コールバッククラスとして定義
-  # after_destroy BookCallbacks.new
+ after_destroy BookCallbacks.new
 
   private
     def history_book
