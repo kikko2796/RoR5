@@ -24,7 +24,9 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    @book = Book.new(book_params)
+     render plain: params[:book].inspect
+     return
+     @book = Book.new(book_params)
 
     respond_to do |format|
       if @book.save
@@ -35,7 +37,12 @@ class BooksController < ApplicationController
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end
+  
+  def book_params
+  params.require(:book).permit(:isbn, :title, :price, :publish, :published, :dl)
   end
+  end
+  
 
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
@@ -71,6 +78,9 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:isbn, :title, :price, :publish, :published, :dl)
+      params.require(:book).permit(:ctisbn, :title, :price, :publish, :published, :dl)
     end
+    
+    
+     
 end

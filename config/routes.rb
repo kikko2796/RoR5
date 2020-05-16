@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :books
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
  get 'hello/index', to:'hello#index'
- get 'hello/view'
+ get 'hello/view' 
  get 'hello/list'
  get 'view/keyword'
  post 'keyword/search'
@@ -118,5 +118,28 @@ Rails.application.routes.draw do
   get 'record/assoc_join3'
   get 'record/assoc_join4'
   get 'record/assoc_includes'
-  
+  get 'ctrl/para(/:id)'=>'ctrl#para'
+  get 'ctrl/para_array'
+  get 'ctrl/req_head'
+  get 'ctrl/req_head2'
+  get 'ctrl/upload'
+  post 'ctrl/upload_process'
+  get 'ctrl/updb(/:id)'=>'ctrl#updb'
+  patch 'ctrl/updb_process(/:id)'=>'ctrl#updb_process'
+  get 'ctrl/show_photo(/:id)'=>'ctrl#show_photo'
+  get 'ctrl/log'
+  get 'ctrl/get_xml'
+  get 'ctrl/get_json'
+get 'ctrl/cookie'
+post 'ctrl/cookie_rec'
+get 'ctrl/session_show'
+post 'ctrl/session_rec'
+get 'ctrl/index'
+get 'login/index'
+post 'login/auth'
+get 'login/logout'
+get 'ctrl/device'
+
+
+
 end
