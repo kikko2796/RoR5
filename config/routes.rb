@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   resources :reviews
   resources :authors
   resources :users
-  resources :books
+  resources :books, constraints:{id:/[0-9]{1,2}/}
+  resources :books, constraints: TimeConstraint.new
+  resources :books, format: false
+  resource :config
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
  get 'hello/index', to:'hello#index'
  get 'hello/view' 
